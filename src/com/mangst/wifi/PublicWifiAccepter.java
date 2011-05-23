@@ -20,32 +20,34 @@ public class PublicWifiAccepter {
 	private static boolean verbose = false;
 
 	public static void main(String args[]) throws Exception {
-		// get arguments
-		if (args.length > 0) {
-			if (args[0].equals("--help") || args[0].equals("-h")) {
-				System.out.println("Public Wi-Fi Terms and Conditions Accepter");
-				System.out.println("Many public wi-fi hotspots require that you first open a webpage to agree");
-				System.out.println("to their terms and conditions. This program will accept those terms and");
-				System.out.println("conditions for you so you don't have to open a browser window and accept");
-				System.out.println("them yourself.");
-				System.out.println();
-				System.out.println("Note: This program makes certain assumptions about the wi-fi hotspot and");
-				System.out.println("is not guaranteed to work in all locations.");
-				System.out.println();
-				System.out.println("by Michael Angstadt - github.com/mangstadt");
-				System.out.println();
-				System.out.println("Example:");
-				System.out.println("java com.mangst.wifi.PublicWifiAccepter --verbose");
-				System.out.println();
-				System.out.println("Arguments:");
-				System.out.println("--verbose, -v");
-				System.out.println("   Verbose output.");
-				System.out.println("--help, -h");
-				System.out.println("   Displays this help text.");
-				System.exit(0);
-			}
-			verbose = args[0].equals("--verbose") || args[0].equals("-v");
+		Arguments arguments = new Arguments(args);
+
+		//display help message
+		if (arguments.exists("h", "help")) {
+			System.out.println("Public Wi-Fi Terms and Conditions Accepter");
+			System.out.println("Many public wi-fi hotspots require that you first open a webpage to agree");
+			System.out.println("to their terms and conditions. This program will accept those terms and");
+			System.out.println("conditions for you so you don't have to open a browser window and accept");
+			System.out.println("them yourself.");
+			System.out.println();
+			System.out.println("Note: This program makes certain assumptions about the wi-fi hotspot and");
+			System.out.println("is not guaranteed to work in all locations.");
+			System.out.println();
+			System.out.println("by Michael Angstadt - github.com/mangstadt");
+			System.out.println();
+			System.out.println("Example:");
+			System.out.println("java com.mangst.wifi.PublicWifiAccepter --verbose");
+			System.out.println();
+			System.out.println("Arguments:");
+			System.out.println("--verbose, -v");
+			System.out.println("   Displays progress messages as the program runs.");
+			System.out.println("--help, -h");
+			System.out.println("   Displays this help text.");
+			System.exit(0);
 		}
+
+		//is verbose mode enabled?
+		verbose = arguments.exists("v", "verbose");
 
 		URL googleUrl = new URL("http://www.google.com");
 
@@ -72,7 +74,7 @@ public class PublicWifiAccepter {
 			// go to the redirect URL, which is the Starbucks login page
 			conn.disconnect();
 			URL redirectUrl = new URL(redirectUrlStr);
-			print("Downloading Philadelphia Airport wifi login page [" + redirectUrl + "]...");
+			print("Downloading wi-fi login page [" + redirectUrl + "]...");
 			conn = (HttpURLConnection) redirectUrl.openConnection();
 			conn.setDoInput(true);
 			conn.setDoOutput(false);
@@ -91,7 +93,7 @@ public class PublicWifiAccepter {
 			println("SUCCESS");
 
 			// parse the form info out of the HTML
-			print("Parsing Philadelphia Airport wifi login page...");
+			print("Parsing wi-fi login page...");
 			HtmlForm formInfo = new HtmlForm(redirectUrl, html.toString());
 			println("SUCCESS");
 
@@ -141,10 +143,9 @@ public class PublicWifiAccepter {
 
 	/**
 	 * Prints a message to stdout if verbose mode is enabled.
-	 * 
 	 * @param message the message to print
 	 */
-	public static void print(String message) {
+	private static void print(String message) {
 		if (verbose) {
 			System.out.print(message);
 		}
@@ -153,10 +154,9 @@ public class PublicWifiAccepter {
 	/**
 	 * Prints a message to stdout if verbose mode is enabled. A newline is added
 	 * to the end of the message.
-	 * 
 	 * @param message the message to print
 	 */
-	public static void println(String message) {
+	private static void println(String message) {
 		if (verbose) {
 			System.out.println(message);
 		}
