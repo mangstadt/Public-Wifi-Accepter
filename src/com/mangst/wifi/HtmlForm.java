@@ -16,17 +16,17 @@ public class HtmlForm {
 	/**
 	 * All of the input parameters on the form and their values.
 	 */
-	public Map<String, String> parameters;
+	private Map<String, String> parameters;
 
 	/**
 	 * The HTTP method the form uses (e.g. "POST"). Will be in upper-case.
 	 */
-	public String method;
+	private String method;
 
 	/**
 	 * The value of the form's "action" attribute.
 	 */
-	public URL actionUrl;
+	private URL actionUrl;
 
 	/**
 	 * The regex pattern used to find a form element in HTML.
@@ -143,5 +143,17 @@ public class HtmlForm {
 		}
 
 		return attributes;
+	}
+
+	public Map<String, String> getParameters() {
+		return parameters;
+	}
+
+	public String getMethod() {
+		return method;
+	}
+
+	public URL getActionUrl() {
+		return actionUrl;
 	}
 }

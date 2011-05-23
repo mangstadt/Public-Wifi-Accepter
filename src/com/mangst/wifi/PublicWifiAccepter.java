@@ -99,14 +99,14 @@ public class PublicWifiAccepter {
 
 			// prepare to submit the form
 			print("Accepting the terms and conditions...");
-			conn = (HttpURLConnection) formInfo.actionUrl.openConnection();
+			conn = (HttpURLConnection) formInfo.getActionUrl().openConnection();
 			conn.setDoOutput(true);
 			conn.setDoInput(true);
-			conn.setRequestMethod(formInfo.method);
+			conn.setRequestMethod(formInfo.getMethod());
 
 			// output parameters to request body
 			StringBuilder sb = new StringBuilder();
-			for (Map.Entry<String, String> entry : formInfo.parameters.entrySet()) {
+			for (Map.Entry<String, String> entry : formInfo.getParameters().entrySet()) {
 				sb.append(URLEncoder.encode(entry.getKey(), "UTF-8") + '=' + URLEncoder.encode(entry.getValue(), "UTF-8") + '&');
 			}
 			PrintWriter out = new PrintWriter(conn.getOutputStream());

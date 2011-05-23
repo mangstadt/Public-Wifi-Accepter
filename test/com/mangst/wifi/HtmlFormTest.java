@@ -32,8 +32,8 @@ public class HtmlFormTest {
 	public void testWithRealHtml() throws Exception {
 		HtmlForm htmlForm = new HtmlForm(new URL(url), html);
 
-		Assert.assertEquals("http://nmd.sbx13386.philapa.wayport.net/connect.adp", htmlForm.actionUrl.toExternalForm());
-		Assert.assertEquals("POST", htmlForm.method);
+		Assert.assertEquals("http://nmd.sbx13386.philapa.wayport.net/connect.adp", htmlForm.getActionUrl().toExternalForm());
+		Assert.assertEquals("POST", htmlForm.getMethod());
 
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("NmdId", "27684");
@@ -57,7 +57,7 @@ public class HtmlFormTest {
 		params.put("ts", "1287671589");
 		params.put("AUPConfirmed", "1");
 		params.put("aupAgree", "1");
-		Assert.assertEquals(params, htmlForm.parameters);
+		Assert.assertEquals(params, htmlForm.getParameters());
 	}
 
 	/**
@@ -103,65 +103,65 @@ public class HtmlFormTest {
 
 		//there's no "method" attribute, so it should default to "GET"
 		htmlForm = new HtmlForm(url, "<form action=\"index.html\">");
-		Assert.assertEquals("http://www.example.com/foo/bar/index.html", htmlForm.actionUrl.toExternalForm());
-		Assert.assertEquals("GET", htmlForm.method);
-		Assert.assertEquals(0, htmlForm.parameters.size());
+		Assert.assertEquals("http://www.example.com/foo/bar/index.html", htmlForm.getActionUrl().toExternalForm());
+		Assert.assertEquals("GET", htmlForm.getMethod());
+		Assert.assertEquals(0, htmlForm.getParameters().size());
 
 		//there is a "method" attribute, it should be parsed as all upper-case
 		htmlForm = new HtmlForm(url, "<form action=\"index.html\" method=\"post\">");
-		Assert.assertEquals("http://www.example.com/foo/bar/index.html", htmlForm.actionUrl.toExternalForm());
-		Assert.assertEquals("POST", htmlForm.method);
-		Assert.assertEquals(0, htmlForm.parameters.size());
+		Assert.assertEquals("http://www.example.com/foo/bar/index.html", htmlForm.getActionUrl().toExternalForm());
+		Assert.assertEquals("POST", htmlForm.getMethod());
+		Assert.assertEquals(0, htmlForm.getParameters().size());
 
 		//"action" attribute is absolute
 		htmlForm = new HtmlForm(url, "<form action=\"http://www.foobar.com/index.html\" method=\"post\">");
-		Assert.assertEquals("http://www.foobar.com/index.html", htmlForm.actionUrl.toExternalForm());
-		Assert.assertEquals("POST", htmlForm.method);
-		Assert.assertEquals(0, htmlForm.parameters.size());
+		Assert.assertEquals("http://www.foobar.com/index.html", htmlForm.getActionUrl().toExternalForm());
+		Assert.assertEquals("POST", htmlForm.getMethod());
+		Assert.assertEquals(0, htmlForm.getParameters().size());
 
 		//"action" attribute uses "../"
 		htmlForm = new HtmlForm(url, "<form action=\"../index.html\" method=\"post\">");
-		Assert.assertEquals("http://www.example.com/foo/index.html", htmlForm.actionUrl.toExternalForm());
-		Assert.assertEquals("POST", htmlForm.method);
-		Assert.assertEquals(0, htmlForm.parameters.size());
+		Assert.assertEquals("http://www.example.com/foo/index.html", htmlForm.getActionUrl().toExternalForm());
+		Assert.assertEquals("POST", htmlForm.getMethod());
+		Assert.assertEquals(0, htmlForm.getParameters().size());
 
 		//"action" attribute uses "/"
 		htmlForm = new HtmlForm(url, "<form action=\"/index.html\" method=\"post\">");
-		Assert.assertEquals("http://www.example.com/index.html", htmlForm.actionUrl.toExternalForm());
-		Assert.assertEquals("POST", htmlForm.method);
-		Assert.assertEquals(0, htmlForm.parameters.size());
+		Assert.assertEquals("http://www.example.com/index.html", htmlForm.getActionUrl().toExternalForm());
+		Assert.assertEquals("POST", htmlForm.getMethod());
+		Assert.assertEquals(0, htmlForm.getParameters().size());
 
 		//switch order of attributes
 		htmlForm = new HtmlForm(url, "<form method=\"post\" action=\"index.html\">");
-		Assert.assertEquals("http://www.example.com/foo/bar/index.html", htmlForm.actionUrl.toExternalForm());
-		Assert.assertEquals("POST", htmlForm.method);
-		Assert.assertEquals(0, htmlForm.parameters.size());
+		Assert.assertEquals("http://www.example.com/foo/bar/index.html", htmlForm.getActionUrl().toExternalForm());
+		Assert.assertEquals("POST", htmlForm.getMethod());
+		Assert.assertEquals(0, htmlForm.getParameters().size());
 
 		//there are attributes in the form tag which can be ignored, along with multiple whitespace characters between attributes
 		htmlForm = new HtmlForm(url, "<form  \t method=\"post\"  \n\n doubleQuotes=\"typical usage\"\t attrWithNoValue  noQuotes=uglyHtml  singleQuotes='an alternative' action=\"index.html\" \n attrWithNoValue2>");
-		Assert.assertEquals("http://www.example.com/foo/bar/index.html", htmlForm.actionUrl.toExternalForm());
-		Assert.assertEquals("POST", htmlForm.method);
-		Assert.assertEquals(0, htmlForm.parameters.size());
+		Assert.assertEquals("http://www.example.com/foo/bar/index.html", htmlForm.getActionUrl().toExternalForm());
+		Assert.assertEquals("POST", htmlForm.getMethod());
+		Assert.assertEquals(0, htmlForm.getParameters().size());
 
 		//there some parameters
 		htmlForm = new HtmlForm(url, "<form action=\"index.html\" method=\"post\"><input type=\"hidden\" name=\"foo\" value=\"bar\" /><input type=\"hidden\" name='sq' value='single quotes' /><input type=\"hidden\" name=nq value=no-quotes /><input type=\"hidden\" value=\"noname\" /><input type=\"hidden\" name=\"novalue\" /><input name=\"notype\" value=\"thereisnotypeattribute\" /><input type=\"submit\" name=\"submit\" value=\"button\" />");
-		Assert.assertEquals("http://www.example.com/foo/bar/index.html", htmlForm.actionUrl.toExternalForm());
-		Assert.assertEquals("POST", htmlForm.method);
-		Assert.assertEquals(5, htmlForm.parameters.size());
-		Assert.assertEquals("bar", htmlForm.parameters.get("foo"));
-		Assert.assertEquals("single quotes", htmlForm.parameters.get("sq"));
-		Assert.assertEquals("no-quotes", htmlForm.parameters.get("nq"));
-		Assert.assertEquals("", htmlForm.parameters.get("novalue"));
-		Assert.assertEquals("thereisnotypeattribute", htmlForm.parameters.get("notype"));
-		Assert.assertNull(htmlForm.parameters.get("submit"));
+		Assert.assertEquals("http://www.example.com/foo/bar/index.html", htmlForm.getActionUrl().toExternalForm());
+		Assert.assertEquals("POST", htmlForm.getMethod());
+		Assert.assertEquals(5, htmlForm.getParameters().size());
+		Assert.assertEquals("bar", htmlForm.getParameters().get("foo"));
+		Assert.assertEquals("single quotes", htmlForm.getParameters().get("sq"));
+		Assert.assertEquals("no-quotes", htmlForm.getParameters().get("nq"));
+		Assert.assertEquals("", htmlForm.getParameters().get("novalue"));
+		Assert.assertEquals("thereisnotypeattribute", htmlForm.getParameters().get("notype"));
+		Assert.assertNull(htmlForm.getParameters().get("submit"));
 
 		//there is more than one form...it will only look at the attributes of the first form, but will read all the parameters of all of the forms
 		htmlForm = new HtmlForm(url, "<form action=\"index.html\" method=\"post\"><input type=\"hidden\" name=\"foo\" value=\"bar\" /><input type=\"hidden\" value=\"noname\" /><input type=\"hidden\" name=\"novalue\" /></form><form action=\"http://www.google.com\"><input name=\"param\" value=\"inanotherform\" />");
-		Assert.assertEquals("http://www.example.com/foo/bar/index.html", htmlForm.actionUrl.toExternalForm());
-		Assert.assertEquals("POST", htmlForm.method);
-		Assert.assertEquals(3, htmlForm.parameters.size());
-		Assert.assertEquals("bar", htmlForm.parameters.get("foo"));
-		Assert.assertEquals("", htmlForm.parameters.get("novalue"));
-		Assert.assertEquals("inanotherform", htmlForm.parameters.get("param"));
+		Assert.assertEquals("http://www.example.com/foo/bar/index.html", htmlForm.getActionUrl().toExternalForm());
+		Assert.assertEquals("POST", htmlForm.getMethod());
+		Assert.assertEquals(3, htmlForm.getParameters().size());
+		Assert.assertEquals("bar", htmlForm.getParameters().get("foo"));
+		Assert.assertEquals("", htmlForm.getParameters().get("novalue"));
+		Assert.assertEquals("inanotherform", htmlForm.getParameters().get("param"));
 	}
 }
