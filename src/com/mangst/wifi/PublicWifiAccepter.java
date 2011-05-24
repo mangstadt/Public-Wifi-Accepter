@@ -51,12 +51,11 @@ public class PublicWifiAccepter {
 
 		URL googleUrl = new URL("http://www.google.com");
 
-		// disable the automatic following of redirects
-		// a 3xx response can be used to determine whether or not the computer
-		// is already connected to the Internet
+		//disable the automatic following of redirects
+		//a 3xx response can be used to determine whether or not the computer is already connected to the Internet
 		HttpURLConnection.setFollowRedirects(false);
 
-		// try to visit a website
+		//try to visit a website
 		print("Attempting to visit [" + googleUrl + "]...");
 		HttpURLConnection conn = (HttpURLConnection) googleUrl.openConnection();
 		conn.setDoInput(true);
@@ -64,14 +63,14 @@ public class PublicWifiAccepter {
 		conn.setRequestMethod("GET");
 		int responseCode = conn.getResponseCode();
 		if (responseCode == HttpURLConnection.HTTP_MOVED_TEMP) {
-			// if you haven't accepted the terms and conditions yet, 302 is returned, redirecting you to the login page
+			//if you haven't accepted the terms and conditions yet, 302 is returned, redirecting you to the login page
 
-			println("FAILED with " + responseCode); // it should fail to visit the website
+			println("FAILED with " + responseCode); //it should fail to visit the website
 
-			// get the Location header, which contains the redirect URL
+			//get the Location header, which contains the redirect URL
 			String redirectUrlStr = conn.getHeaderField("Location");
 
-			// go to the redirect URL, which is the Starbucks login page
+			//go to the redirect URL, which is the Starbucks login page
 			conn.disconnect();
 			URL redirectUrl = new URL(redirectUrlStr);
 			print("Downloading wi-fi login page [" + redirectUrl + "]...");
@@ -80,7 +79,7 @@ public class PublicWifiAccepter {
 			conn.setDoOutput(false);
 			conn.setRequestMethod("GET");
 
-			// get the HTML of the webpage
+			//get the HTML of the webpage
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String line;
 			StringBuilder html = new StringBuilder();
@@ -92,32 +91,32 @@ public class PublicWifiAccepter {
 
 			println("SUCCESS");
 
-			// parse the form info out of the HTML
+			//parse the form info out of the HTML
 			print("Parsing wi-fi login page...");
 			HtmlForm formInfo = new HtmlForm(redirectUrl, html.toString());
 			println("SUCCESS");
 
-			// prepare to submit the form
+			//prepare to submit the form
 			print("Accepting the terms and conditions...");
 			conn = (HttpURLConnection) formInfo.getActionUrl().openConnection();
 			conn.setDoOutput(true);
 			conn.setDoInput(true);
 			conn.setRequestMethod(formInfo.getMethod());
 
-			// output parameters to request body
+			//output parameters to request body
 			StringBuilder sb = new StringBuilder();
 			for (Map.Entry<String, String> entry : formInfo.getParameters().entrySet()) {
 				sb.append(URLEncoder.encode(entry.getKey(), "UTF-8") + '=' + URLEncoder.encode(entry.getValue(), "UTF-8") + '&');
 			}
 			PrintWriter out = new PrintWriter(conn.getOutputStream());
-			out.print(sb.substring(0, sb.length() - 1)); // remove the last '&'
+			out.print(sb.substring(0, sb.length() - 1)); //remove the last '&'
 			out.flush();
 
-			// send request
+			//send request
 			conn.getResponseCode();
 			conn.disconnect();
 
-			// try to connect to the Internet again to see if it worked
+			//try to connect to the Internet again to see if it worked
 			conn = (HttpURLConnection) googleUrl.openConnection();
 			conn.setDoInput(true);
 			conn.setDoOutput(false);
