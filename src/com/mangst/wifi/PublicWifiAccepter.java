@@ -33,6 +33,10 @@ public class PublicWifiAccepter {
 			System.out.println("Note: This program makes certain assumptions about the wi-fi hotspot and");
 			System.out.println("is not guaranteed to work in all locations.");
 			System.out.println();
+			System.out.println("Also note: By running this program, you are still responsible for adhering to");
+			System.out.println("the network owner's terms and conditions. This program does not in any way");
+			System.out.println("absolve you from having to follow the terms and conditions.");
+			System.out.println();
 			System.out.println("by Michael Angstadt - github.com/mangstadt");
 			System.out.println();
 			System.out.println("Example:");
