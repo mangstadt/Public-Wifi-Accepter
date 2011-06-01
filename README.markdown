@@ -16,3 +16,17 @@ Run it from the command line:
        Displays progress messages as the program runs.
     --help, -h
        Displays this help text.
+
+# Opening in Eclipse
+
+To generate the necessary files needed to open the project in Eclipse, navigate to the project root and run the following Maven command:
+
+    mvn eclipse:eclipse
+
+# How to build
+
+To build the project, navigate to the project root and run the following Maven command:
+
+    mvn clean compile assembly:single
+    
+This will generate a runnable JAR file that contains all dependencies.
