@@ -8,7 +8,7 @@ Also note: By running this program, you are still responsible for adhering to th
 
 Run it from the command line:
 
-    java com.mangst.wifi.PublicWifiAccepter --verbose
+    java -jar wifi.jar --verbose
 
 # Command line arguments
 
