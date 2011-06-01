@@ -25,6 +25,7 @@ public class PublicWifiAccepter {
 		//display help message
 		if (arguments.exists("h", "help")) {
 			System.out.println("Public Wi-Fi Terms and Conditions Accepter");
+			System.out.println();
 			System.out.println("Many public wi-fi hotspots require that you first open a webpage to agree");
 			System.out.println("to their terms and conditions. This program will accept those terms and");
 			System.out.println("conditions for you so you don't have to open a browser window and accept");
@@ -40,7 +41,7 @@ public class PublicWifiAccepter {
 			System.out.println("by Michael Angstadt - github.com/mangstadt");
 			System.out.println();
 			System.out.println("Example:");
-			System.out.println("java com.mangst.wifi.PublicWifiAccepter --verbose");
+			System.out.println("java -jar wifi.jar --verbose");
 			System.out.println();
 			System.out.println("Arguments:");
 			System.out.println("--verbose, -v");
