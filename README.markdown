@@ -15,8 +15,8 @@ Run it from the command line:
     --verbose, -v
        Displays progress messages as the program runs.
     --testUrl, -u
-       The URL to use when testing for Internet connectivity.");
-       Defaults to http://www.cnn.com");
+       The URL to use when testing for Internet connectivity.
+       Defaults to http://www.cnn.com
     --help, -h
        Displays this help text.
 
