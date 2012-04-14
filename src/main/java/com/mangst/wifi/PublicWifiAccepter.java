@@ -46,6 +46,9 @@ public class PublicWifiAccepter {
 			System.out.println("Arguments:");
 			System.out.println("--verbose, -v");
 			System.out.println("   Displays progress messages as the program runs.");
+			System.out.println("--testUrl, -u");
+			System.out.println("   The URL to use when testing for Internet connectivity.");
+			System.out.println("   Defaults to http://www.cnn.com");
 			System.out.println("--help, -h");
 			System.out.println("   Displays this help text.");
 			System.exit(0);
@@ -54,15 +57,16 @@ public class PublicWifiAccepter {
 		//is verbose mode enabled?
 		verbose = arguments.exists("v", "verbose");
 
-		URL googleUrl = new URL("http://www.google.com");
+		String testUrlStr = arguments.value("u", "testUrl", "http://www.cnn.com");
+		URL testUrl = new URL(testUrlStr);
 
 		//disable the automatic following of redirects
 		//a 3xx response can be used to determine whether or not the computer is already connected to the Internet
 		HttpURLConnection.setFollowRedirects(false);
 
 		//try to visit a website
-		print("Attempting to visit [" + googleUrl + "]...");
-		HttpURLConnection conn = (HttpURLConnection) googleUrl.openConnection();
+		print("Attempting to visit [" + testUrl + "]...");
+		HttpURLConnection conn = (HttpURLConnection) testUrl.openConnection();
 		conn.setDoInput(true);
 		conn.setDoOutput(false);
 		conn.setRequestMethod("GET");
@@ -122,7 +126,7 @@ public class PublicWifiAccepter {
 			conn.disconnect();
 
 			//try to connect to the Internet again to see if it worked
-			conn = (HttpURLConnection) googleUrl.openConnection();
+			conn = (HttpURLConnection) testUrl.openConnection();
 			conn.setDoInput(true);
 			conn.setDoOutput(false);
 			conn.setRequestMethod("GET");
