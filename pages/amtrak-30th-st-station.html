@@ -1,0 +1,508 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="no" http-equiv="imagetoolbar" />
+<!-- IE8 renders as IE7 to spare ourselves another column in the compatability matrix -->
+<meta content="IE=EmulateIE7" http-equiv="X-UA-Compatible" />
+
+<!-- ************* AmtrakConnect Version 2.1 | 2/27/10 ********** -->
+
+<style type="text/css">
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color:#091F3E;
+	line-height: 1.3;
+	margin: 0;
+	padding: 0;
+}
+
+
+p {
+font-size: 70%;
+margin: 0 0 1.3em 0;
+}
+
+h5{ 
+font-size: 70%;
+color: #336699;
+margin: 1.3em 0 .5em;
+}
+
+h2{ 
+font-size: 90%;
+color: #336699;
+margin: 1.3em 0 .5em;
+}
+
+
+/* --------------------background images-------------------*/
+
+img.source-image {
+	position: absolute;
+	width: 2445px;
+	top: -320px;
+	left: -450px;
+	z-index:1;                  /*    z index of one */
+}
+
+#img.source-image {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow:hidden;
+}
+
+.iconbullet{
+	float: left;
+	clear: both; 
+	margin-right: 15px;
+}
+
+.tableindent {
+	position: relative;
+	width: 490px;
+	top: 285px;
+	left: 130px;
+	display:block;
+	z-index: 625;                                                 /*    z index of  twenty five */
+}
+
+.tableindent td {
+	padding: 12px;
+}
+
+.tableindent h5 {
+	font-size:11px;
+	line-height:1.6em;
+	margin: 0 0 0 30px;
+	padding:0 0 0 30px;
+	color:#FFFFFF;
+}
+
+/* ----------------------- popup window styles for ts & cs page -----------------------*/
+	
+#blanket {
+	background-color:#111;
+	opacity: 0.65;
+	filter:alpha(opacity=65);
+	position:absolute;
+	z-index: 9001;                   /*    z index of  nine thousaaaaaaaaand */
+	top:-10px;
+	left:-250px; 
+	width:250%; 
+}
+
+#popUpDiv {
+	position:absolute;
+	background-color:#eeeeee;
+	width:550px;
+	height:400px;
+	margin: -480px 0 0 -500px; 
+	padding: 25px 25px;
+	overflow: auto;
+	z-index: 9002;                  /*    z index of  nine thousaaaaaaaaand and two*/
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+#popUpDiv2 { 	
+position:absolute;
+margin: 300px 0 0 100px;   }
+}
+                                                     
+
+ #popUpDiv h5{ 
+	font-size: 80%;
+	color: #336699;
+	margin: 1.3em 0 .5em;
+}
+
+#linkspg a {
+	color:#FF9900;
+	}
+
+#linkspg a:hover {
+	color:#FFCC66;
+	background-color: transparent;
+	text-decoration:underline;
+	}
+	
+#connectbtn {
+	position: relative;
+	top: 210px;
+	left:680px;
+	z-index:5001;                 /*    z index of five thousand and one */
+	}
+
+
+
+
+</style>
+
+
+<link rel="Shortcut Icon" href="favicon.ico">
+
+<script type="text/javascript">
+function toggle(div_id) {
+	var el = document.getElementById(div_id);
+	if ( el.style.display == 'none' ) {	el.style.display = 'block';}
+	else {el.style.display = 'none';}
+}
+function blanket_size(popUpDivVar) {
+	if (typeof window.innerWidth != 'undefined') {
+		viewportheight = window.innerHeight;
+	} else {
+		viewportheight = document.documentElement.clientHeight;
+	}
+	if ((viewportheight > document.body.parentNode.scrollHeight) && (viewportheight > document.body.parentNode.clientHeight)) {
+		blanket_height = viewportheight;
+	} else {
+		if (document.body.parentNode.clientHeight > document.body.parentNode.scrollHeight) {
+			blanket_height = document.body.parentNode.clientHeight;
+		} else {
+			blanket_height = document.body.parentNode.scrollHeight;
+		}
+	}
+	var blanket = document.getElementById('blanket');
+	blanket.style.height = blanket_height + 'px';
+	var popUpDiv = document.getElementById(popUpDivVar);
+	popUpDiv_height=blanket_height/2-150;//150 is half popup's height
+	popUpDiv.style.top = popUpDiv_height + 'px';
+}
+function window_pos(popUpDivVar) {
+	if (typeof window.innerWidth != 'undefined') {
+		viewportwidth = window.innerHeight;
+	} else {
+		viewportwidth = document.documentElement.clientHeight;
+	}
+	if ((viewportwidth > document.body.parentNode.scrollWidth) && (viewportwidth > document.body.parentNode.clientWidth)) {
+		window_width = viewportwidth;
+	} else {
+		if (document.body.parentNode.clientWidth > document.body.parentNode.scrollWidth) {
+			window_width = document.body.parentNode.clientWidth;
+		} else {
+			window_width = document.body.parentNode.scrollWidth;
+		}
+	}
+	var popUpDiv = document.getElementById(popUpDivVar);
+	window_width=window_width/2-150;//150 is half popup's width
+	popUpDiv.style.left = window_width + 'px';
+}
+function popup(windowname) {
+	blanket_size(windowname);
+	window_pos(windowname);
+	toggle('blanket');
+	toggle(windowname);		
+}
+
+</script>
+
+
+<script type="text/javascript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+
+<title>AmtrakConnect</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+</head>
+
+<body style="overflow:hidden" onload="MM_preloadImages('btnagreeroll.gif')">
+<div id="popUpDiv2">
+<div id="popUpDiv" style="display:none">
+<p><a href="#" onclick="popup('popUpDiv')" style="text-align:right">[X] Close Window</a></p>
+  <p align=center style='text-align:center'>&nbsp;</p>
+
+
+<!-- Terms and Conditions -->
+
+
+  <p>Updated: 2/5/2010</p>
+  <p align=center style='text-align:center'>&nbsp;</p>
+  <h2 align=center style='text-align:center'>AmtrakConnect<sup>sm</sup> Terms of Service</h2>
+  <p>Please read the following information carefully before using
+    AmtrakConnect<sup>sm</sup>.  You may not use AmtrakConnect without accepting
+    these AmtrakConnect Terms of Service (“Terms of Service”).  These Terms of Service
+    represent a binding agreement (“Agreement”) between you and the National
+    Railroad Passenger Corporation, commonly known as Amtrak (“Amtrak”). </p>
+  <h5>Acceptance of Terms of Service</h5>
+  <p>BY
+    CLICKING ON “I AGREE” ON THE AMTRAKCONNECT START PAGE, YOU REPRESENT THAT YOU
+    HAVE READ, UNDERSTAND, AND AGREE TO THIS AGREEMENT.</p>
+  <p>If you do not agree to these Terms of Service, you may not
+    use AmtrakConnect.  Your electronic acceptance of the Agreement by clicking on
+    “I Agree” on the start page has the same effect as if you had actually signed
+    the Agreement.</p>
+  <p>If you choose to use other Amtrak services while using
+    AmtrakConnect, your use will be governed by the terms and conditions provided
+    to you in association  with those services.</p>
+  <h5>A Note About Changes to These Terms of Service</h5>
+  <p>Please note that these Terms of Service may
+    change at any time without special notice to you. Please check back to review
+    these Terms of Service whenever you connect to AmtrakConnect as you will be
+    deemed to have read, understood, received notice of, and agreed to any changes.
+    These Terms of Service supersede all previous terms or statements concerning AmtrakConnect. 
+    The date of the last update to these Terms of Service is always indicated near
+    the top of the page and any change in the date of these Terms of Service since
+    the last time you connected shall constitute notice to you that the Terms of
+    Service  have changed since the last time you connected.</p>
+  <h5>Fee for AmtrakConnect</h5>
+  <p>AmtrakConnect is provided free of charge to Amtrak
+    passengers.  However, Amtrak reserves the right at any time to charge for use
+    of AmtrakConnect.</p>
+  <h5>Your Responsibilities</h5>
+  <p>AmtrakConnect is a wireless network that allows you to
+    connect to the Internet.  An 802.11b-compatible device is required to enable AmtrakConnect to
+    operate. You are responsible for supplying any necessary equipment, technology
+    and software to use AmtrakConnect.  You are responsible for ensuring that your
+    device is compatible with AmtrakConnect and that it meets federal and other
+    applicable standards.  Network speed will vary based on device configuration,
+    compression and network congestion.  The availability and performance of the
+    Service is subject to all limitations in the device.</p>
+  <p>You understand that AmtrakConnect, which utilizes wireless
+    technologies, is not inherently secure and that wireless communications can be
+    intercepted.  You agree that you are solely responsible for providing security
+    measures that are suited for your intended use of AmtrakConnect, including
+    protecting your data and equipment from viruses, spyware and other harmful
+    components.  You also agree that you are solely responsible for any security
+    breach or accidental disclosure of your personal information in your use of
+    AmtrakConnect.</p>
+  <p>You are responsible for paying any charges that you incur
+    from third parties through your use of AmtrakConnect.</p>
+  <h5>Proper Use</h5>
+  <p>As a courtesy to your fellow passengers, you must turn
+    off any audible sound or use headphones while accessing AmtrakConnect. As
+    AmtrakConnect is a shared Internet connection,  we ask that you refrain from
+    downloading large files and playing streaming video so that there is adequate
+    bandwidth for fellow passengers. Amtrak reserves the right to restrict access
+    to certain audio and video streaming sites and will block access to external
+    sites as necessary to prevent use of excess bandwidth for audio and video
+    streaming.</p>
+  <p>You agree to use AmtrakConnect in compliance with these
+    Terms of Service and that you will not use AmtrakConnect in a manner prohibited
+    by any federal, state, or local law or regulation, and will abide by these
+    Terms of Service. You may not use AmtrakConnect or allow AmtrakConnect to be
+    used, for any purpose or in any way that interferes with or disrupts other
+    passengers or Amtrak’s operations or network or damages Amtrak’s property. </p>
+  <p>Improper uses include, but are not limited to: </p>
+  <blockquote>
+    <p>(a) Violating any applicable law or
+      regulation; </p>
+    <p>(b)Posting or transmitting content you
+      do not have the right to post or transmit; </p>
+    <p>(c) Posting or transmitting content that
+      infringes or violates a third party's trademark, patent, trade secret,
+      copyright, publicity, privacy, or other right; </p>
+    <p>(d) Posting or transmitting content that
+      is unlawful, untrue, stalking, harassing, libelous, defamatory, abusive,
+      threatening, obscene, hateful, harmful or otherwise objectionable as determined
+      in Amtrak’s sole discretion; </p>
+    <p>(e) Harming, or
+      attempting to harm, minors in any way;</p>
+    <p>(f) Attempting to intercept, collect or
+      store data about third parties without their knowledge or consent; </p>
+    <p>(g) Accessing, tampering with or using
+      non-public areas of AmtrakConnect, computer systems or network; </p>
+    <p>(h) Attempting to probe, scan or test
+      the vulnerability of a system or network or to breach security or
+      authentication measures; </p>
+    <p>(i) Sending or attempting to send
+      unsolicited messages, including without limitation, promotions or
+      advertisements for products or services, &quot;pyramid schemes&quot;,
+      &quot;spam&quot;, &quot;chain mail&quot; or &quot;junk mail&quot;; </p>
+    <p>(j) Using, or attempting to use, AmtrakConnect
+      to send altered, deceptive or false source-identifying information; </p>
+    <p>(k) Interfering or attempting to
+      interfere with the access of any user, host or network, including without
+      limitation, sending a &quot;virus&quot; to AmtrakConnect, overloading,
+      &quot;flooding,&quot; &quot;spamming,&quot; &quot;crashing,&quot; or
+      &quot;mailbombing&quot; AmtrakConnect; and</p>
+    <p>(l) Impersonating
+      any person or entity or falsely stating or otherwise misrepresenting your
+      affiliation with a person or entity; forging headers or otherwise manipulating
+      identifiers in order to disguise the origin of any material transmitted through
+      AmtrakConnect.</p>
+  </blockquote>
+  <h5>Content Disclaimer</h5>
+  <p>Amtrak does
+    not control and is not responsible for data, content, services, or products
+    that you access or download through AmtrakConnect.  Amtrak may, but is not
+    obliged to, block data transmissions to protect Amtrak, AmtrakConnect, or the
+    public.</p>
+  <h5>Disclaimer
+    of Warranties</h5>
+  <p>Amtrak
+    disclaims any and all responsibility or liability for the accuracy, content,
+    completeness, legality, reliability, operability or availability of information
+    or material displayed in or accessible through AmtrakConnect. Amtrak disclaims
+    any responsibility for the deletion, failure to store, misdelivery, or untimely
+    delivery of any information or material.  Amtrak disclaims any responsibility
+    for any harm resulting from downloading or accessing any information or
+    material on the Internet through AmtrakConnect.</p>
+  <p>AMTRAKCONNECT,
+    AND ALL MATERIALS, INFORMATION, PRODUCTS AND SERVICES INCLUDED IN AMTRAKCONNECT
+    ARE PROVIDED &quot;AS IS&quot; AND “AS AVAILABLE” WITH NO WARRANTIES
+
+    WHATSOEVER. AMTRAK EXPRESSLY DISCLAIMS TO THE FULLEST EXTENT PERMITTED BY LAW
+    ALL EXPRESS, IMPLIED, AND STATUTORY WARRANTIES, INCLUDING, WITHOUT LIMITATION,
+    THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+    NON-INFRINGEMENT OF PROPRIETARY RIGHTS. AMTRAK DISCLAIMS ANY WARRANTIES
+    REGARDING THE SECURITY, RELIABILITY, TIMELINESS, AND PERFORMANCE OF
+    AMTRAKCONNECT. AMTRAK DISCLAIMS ANY WARRANTIES FOR ANY INFORMATION OR ADVICE
+    OBTAINED THROUGH AMTRAKCONNECT. AMTRAK DISCLAIMS ANY WARRANTIES FOR SERVICES OR
+    GOODS RECEIVED THROUGH OR ADVERTISED ON AMTRAKCONNECT OR RECEIVED THROUGH ANY
+    LINKS PROVIDED BY AMTRAKCONNECT, AS WELL AS FOR ANY INFORMATION OR ADVICE
+    RECEIVED THROUGH ANY LINKS PROVIDED IN AMTRAKCONNECT.</p>
+  <p>YOU
+    UNDERSTAND AND AGREE THAT (A) AMTRAKCONNECT WILL NOT BE UNINTERRUPTED OR
+    ERROR-FREE, (B) THERE IS NO WARRANTY OR GUARANTEE THAT AMTRAKCONNECT WILL
+    OPERATE AT ANY MINIMUM DATA TRANSFER SPEED, (C) AMTRAKCONNECT HAS NO CONTROL
+    OVER THIRD PARTY NETWORKS OR SITES YOU MAY ACCESS IN THE COURSE OF YOUR USE OF
+    AMTRAKCONNECT, AND (D) YOU DOWNLOAD OR OTHERWISE OBTAIN MATERIAL OR DATA THROUGH
+    THE USE OF AMTRAKCONNECT AT YOUR OWN DISCRETION AND RISK AND THAT YOU WILL BE
+    SOLELY RESPONSIBLE FOR ANY DAMAGES TO YOUR COMPUTER SYSTEM OR LOSS OF DATA THAT
+    RESULTS FROM THE DOWNLOAD OF SUCH MATERIAL OR DATA.</p>
+  <p>SOME STATES
+    OR OTHER JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES, SO THE
+    ABOVE EXCLUSIONS MAY NOT APPLY TO YOU. YOU MAY ALSO HAVE OTHER RIGHTS THAT VARY
+    FROM STATE TO STATE AND JURISDICTION TO JURISDICTION.</p>
+  <h5>Support and Feedback</h5>
+  <p>Amtrak provides printed materials with basic information on
+    how to connect to AmtrakConnect. Amtrak does not expressly provide technical
+    support or troubleshooting any connectivity issues, problems, or questions that
+    may arise. Amtrak employees cannot assist in making changes to your network
+    settings or perform any troubleshooting on your computer.  For any questions
+    that are not addressed in Amtrak’s published materials, please consult the
+    manual or manufacturer of your device. Amtrak employees are not required to
+    know how to assist with any technical questions or issues you may have with
+    regard to your use of AmtrakConnect, but will be glad to answer questions as
+    and when they are able to the extent that their knowledge permits. Amtrak welcomes
+    your feedback at www.amtrak.com/contactus. </p>
+  <h5>Limitation of Liability and Indemnification</h5>
+  <p>TO THE
+    FULLEST EXTENT PERMITTED BY APPLICABLE LAW, UNDER NO CIRCUMSTANCES, INCLUDING,
+    BUT NOT LIMITED TO, NEGLIGENCE, SHALL AMTRAK, ITS OFFICERS, DIRECTORS, EMPLOYEES,
+    AGENTS AND/OR CONTRACTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+    SPECIAL OR CONSEQUENTIAL DAMAGES, INCLUDING BUT NOT LIMITED TO, DAMAGES FOR
+    LOSS OF PROFITS, USE, DATA OR OTHER INTANGIBLES, EVEN IF AMTRAK HAS  BEEN
+    ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, THAT RESULT FROM THE USE OR THE
+    INABILITY TO USE THE SERVICE, FROM ANY CHANGES TO THE SERVICE, OR FROM
+    UNAUTHORIZED ACCESS TO OR ALTERATION OF YOUR TRANSMISSIONS OR DATA.  YOU
+    SPECIFICALLY AGREE THAT AMTRAK IS  NOT RESPONSIBLE OR LIABLE TO YOU OR ANYONE
+    ELSE FOR ANY THREATENING, DEFAMATORY, OBSCENE, OFFENSIVE, TORTIOUS, OR ILLEGAL CONDUCT OF YOURS OR OF ANY OTHER PARTY OR ANY INFRINGEMENT OF ANOTHER'S RIGHTS,
+    INCLUDING INTELLECTUAL PROPERTY RIGHTS, ARISING ON, FROM, OR IN CONNECTION WITH
+    AMTRAKCONNECT. </p>
+  <p>WITHOUT
+    LIMITING THE FOREGOING, UNDER NO CIRCUMSTANCES WILL AMTRAK BE HELD LIABLE FOR
+    ANY DELAY OR FAILURE IN PERFORMANCE FOR ANY REASON WHATSOEVER, INCLUDING,
+    WITHOUT LIMITATION, INTERNET FAILURES, COMPUTER EQUIPMENT FAILURES,
+    TELECOMMUNICATION EQUIPMENT FAILURES, OTHER EQUIPMENT FAILURES, ELECTRICAL
+    POWER FAILURES, NON-PERFORMANCE OF THIRD PARTIES, OR LOSS OF OR FLUCTUATIONS IN
+    HEAT, LIGHT, OR AIR-CONDITIONING.</p>
+  <p>IF YOU ARE
+    DISSATISFIED WITH THE SERVICE, THE MATERIALS AVAILABLE ON OR THROUGH AMTRAKCONNECT,
+    OR WITH ANY PROVISIONS IN THESE TERMS OF SERVICE, YOUR SOLE AND EXCLUSIVE
+    REMEDY IS TO DISCONTINUE USING AMTRAKCONNECT.</p>
+  <p>AMTRAK MAY
+    TERMINATE YOUR ACCESS TO AMTRAKCONNECT AT ANY TIME AND FOR ANY REASON, WITH OR
+    WITHOUT CAUSE, AND WILL HAVE NO LIABILITY WHATSOEVER TO YOU FOR ANY
+    TERMINATION.</p>
+  <p>You agree
+    to hold harmless and indemnify Amtrak and its officers, directors, employees,
+    contractors and agents harmless from and against any third party claim arising
+    from or in any way related to your use of AmtrakConnect, including liability,
+    damages or costs (including litigations costs and attorneys’ fees).  In such a
+    case, Amtrak will provide you with written notice of such claim.</p>
+  <h5>Miscellaneous</h5>
+  <p>This Agreement is governed by and construed in accordance
+    with the laws of the District of Columbia, United States of America, without
+    regards to its principles of conflicts of law. You agree to submit to the
+    exclusive jurisdiction of any Federal court located in the District of Columbia,
+    United States of America, and waive any jurisdictional, venue or inconvenient
+    forum objections to such courts. </p>
+  <p>If any provision of this Agreement is found to be unlawful,
+    void or for any reason unenforceable, then that provision shall be deemed
+    severable from this Agreement and shall not affect the validity and
+    enforceability of any remaining provisions.  No waiver by either party of any
+    breach or default hereunder shall be deemed to be a waiver of any preceding or
+    subsequent breach or default. Any heading, caption or section title contained
+    in this Agreement is inserted only as a matter of convenience and in no way
+    defines or explains any section or provision hereof.</p>
+  <p>The term
+    Wi-Fi® is a registered mark of the Wi-Fi Alliance®. Amtrak®, Acela®, Acela
+    Express®, AmtrakConnect<sup>sm</sup> and Enjoy the journey<sup>sm</sup> are
+    service marks of the National Railroad Passenger Corporation.</p>
+    <p>&nbsp;<p />
+<p><a href="#" onclick="popup('popUpDiv')">[X] Close Window</a></p>
+    
+<!--  end terms and conditions -->
+</div>
+</div>
+
+<img class="source-image" src="finalspgbg2.jpg" alt="Wi-Fi? Why Yes. Free Wi-Fi on Acela Express via AmtrakConnect." />
+<div id="blanket" style="display:none;"></div>
+<table border="0" class="tableindent">
+    <tr>
+      <td><img src="iconheadphones.gif" alt="turn off sound" width="35" height="35" class="iconbullet"/>
+      <h5>As a courtesy to your fellow passengers please turn off any audible sound or use headphones while accessing this service.</h5></td>
+  </tr>
+    <tr>
+      <td><img src="iconwireless.gif" alt="refrain from streaming" width="35" height="35" class="iconbullet"/>
+      <h5>This service works best when using basic internet browsing and accessing email. We  ask that you refrain from playing streaming video and downloading large files. </h5>    			</td>
+  </tr>
+    <tr>
+      <td><img src="iconagree.gif" alt="agree to terms" width="35" height="35" class="iconbullet" />
+
+<div id="linkspg"><h5>By using this service, you agree to our <a href="#" onclick="popup('popUpDiv')">Terms and Conditions</a>.</h5></div></td>
+  </tr>
+</table>
+
+<div id="connectbtn">
+
+<!--******************* start form ***************************-->
+
+<form name="form1" method="post" action="/auth/index.html/u">
+<input type="hidden" name="cmd" value="authenticate" />
+<input type="hidden" id="email" name="email" type="text" value="user@company.com" class="text" accesskey="e" />
+
+<a href="javascript:document.form1.submit()" 
+onmouseover="document.form1.sub_but.src='btnagreeroll.gif'" 
+onmouseout="document.form1.sub_but.src='btnagree.gif'" 
+onclick="return val_form_this_page()">
+
+<img src="btnagree.gif" width="149" height="49" border="0" alt="I agree" name="Login" />
+
+	  </form>  
+      
+      <!--******************* end form ***************************-->
+</div>
+</body>
+</html>
